@@ -75,16 +75,8 @@ attr_accessor :name, :funds
 
 def tickets_bought()
   return films.count
-end 
+end
 
 
-  # def tickets()
-  #   sql = "SELECT tickets.* FROM tickets WHERE customer_id = $1"
-  #   values = [@id]
-  #   ticket_array = SqlRunner.run(sql, values)
-  #   tickets = ticket_array.map{|ticket_hash| Ticket.new(ticket_hash)}
-  #   return tickets
-  # end
 
 end
-# SELECT tickets.* FROM tickets WHERE tickets.customer_id = 2;

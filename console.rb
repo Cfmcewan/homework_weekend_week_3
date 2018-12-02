@@ -67,7 +67,7 @@ film3.save()
 
 
 ticket1 = Ticket.new({
-  'customer_id' => customer2.id,
+  'customer_id' => customer3.id,
   'film_id' => film2.id
   })
 
@@ -94,7 +94,7 @@ ticket4 = Ticket.new({
 
 ticket3.delete()
 customer3.delete()
-film3.delete()
+
 
 
 
@@ -102,7 +102,8 @@ all_customers = Customer.all
 all_films = Film.all
 all_tickets = Ticket.all
 
+all_films = Film.all
 
-
+film3.delete()
 binding.pry
 nil

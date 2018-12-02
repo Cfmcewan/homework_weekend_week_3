@@ -15,6 +15,24 @@ class Film
     @price = options['price']
   end
 
+  def customers()
+      sql = "SELECT customers.* FROM customers
+      INNER JOIN tickets ON customers.id = tickets.customer_id WHERE tickets.film_id = $1"
+      values = [@id]
+      customer_array = SqlRunner.run(sql, values)
+      customers = customer_array.map{|customer_hash| Customer.new(customer_hash)}
+      return customers
+  end
+
+  def self.all()
+    sql = "SELECT * FROM films"
+    films = SqlRunner.run(sql)
+    result = films.map {|film| Film.new(film)}
+    return result
+  end
+
+
+
   def save()
     sql = "INSERT INTO films
     (title, price)
@@ -61,6 +79,6 @@ end
 
   def customers_seeing_film()
     return customers.count
-  end 
+  end
 
 end
