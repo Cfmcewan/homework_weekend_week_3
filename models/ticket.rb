@@ -41,6 +41,14 @@ class Ticket
     sql = "DELETE FROM tickets WHERE id = $1"
     values = [@id]
     SqlRunner.run(sql, values)
+  end
+
+  def customer()
+    sql = "SELECT * FROM customers WHERE id = $1"
+    values = [@customer_id]
+    customer_hash = SqlRunner.run(sql, values)[0]
+    customer = Customer.new(customer_hash)
+    return customer
   end 
 
 end

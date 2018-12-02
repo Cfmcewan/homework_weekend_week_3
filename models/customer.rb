@@ -35,7 +35,7 @@ attr_accessor :name, :funds
       sql = "DELETE FROM customers WHERE id = $1"
       values = [@id]
       SqlRunner.run(sql, values)
-    end 
+    end
 
   def self.delete_all()
     sql = "DELETE FROM customers"
@@ -49,6 +49,42 @@ attr_accessor :name, :funds
     SqlRunner.run(sql, values)
   end
 
+  def films()
+    sql = "SELECT films.*
+    FROM films INNER JOIN tickets
+    ON films.id = tickets.film_id
+    WHERE tickets.customer_id = $1"
+    values = [@id]
+    film_array = SqlRunner.run(sql,values)
+    films = film_array.map {|film_hash| Film.new(film_hash)}
+    return films
+  end
 
+  def decrease_funds(ticket_price)
+    new_funds = @funds.to_i - ticket_price
+    @funds = new_funds.to_s
+    return @funds
+  end
+
+  def buy_ticket(ticket_price)
+    decrease_funds(ticket_price)
+    sql = "UPDATE customers SET funds = $1 WHERE id = $2"
+    values = [@funds, @id]
+    SqlRunner.run(sql, values)
+  end
+
+def tickets_bought()
+  return films.count
+end 
+
+
+  # def tickets()
+  #   sql = "SELECT tickets.* FROM tickets WHERE customer_id = $1"
+  #   values = [@id]
+  #   ticket_array = SqlRunner.run(sql, values)
+  #   tickets = ticket_array.map{|ticket_hash| Ticket.new(ticket_hash)}
+  #   return tickets
+  # end
 
 end
+# SELECT tickets.* FROM tickets WHERE tickets.customer_id = 2;
